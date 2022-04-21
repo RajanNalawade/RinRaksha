@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+
+<head>
+
+    <title>RinRaksha</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="keywords" content="" />
+    <meta name="theme-color" content="#317EFB" />
+    <meta name="Description" content="RinRaksha">
+
+    <link rel="shortcut icon" type="image/png" href="../Assets/icons/app-icon-192.png" />
+
+    <!-- wpa manifest -->
+    <link rel="manifest" href="../manifest.json">
+
+    <!-- image compression -->
+    <script src="../Assets/js/image-compression.min.js" type="text/javascript"></script>
+
+    <script src="../Assets/js/pdfmake.min.js" type="text/javascript"></script>
+    <script src="../Assets/js/vfs_fonts.js" type="text/javascript"></script>
+    <script src="RinRaksha.js"></script>
+    <script src="../Common/global.js"></script>
+    <link href="../Common/global.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="loading" id="loader"></div>
+
+    <div id="divMainContainerError" class="container-fluid" style="margin: 10px; display: block;">
+
+        <div class="row">
+            <h3 id="divMainContainerError1">No Data Found</h3>
+        </div>
+
+    </div>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content" style="text-align: center">
+
+            <!-- <div class="modal-content" > -->
+            <p style="text-align: justify">
+                <span id="modalDesc1"></span>
+                <a id="anchorPIVCLInk" href=""></a>
+                <span id="modalDesc2">Some text in the Modal..</span>
+                <a id="anchorPIVCCall" href="18002679090">18002679090</a>
+                <span id="modalDesc3">Some text in the Modal..</span>
+            </p>
+
+            <!-- </div> -->
+
+            <button type="button" class="btn btn-warning" onclick="onClickPIVCLink(true)">
+                DO PIVC NOW
+            </button>
+
+            <button type="button" class="btn btn-warning" onclick="onClickPIVCLink(false)">
+                DO LATER
+            </button>
+        </div>
+    </div>
+
+    <div id="divMainContainer" class="container-fluid" style="margin: 10px; display: none;">
+
+        <div class="row" style="text-align: right;">
+            <img id="imgSBIGeneral" src="https://www.sbigeneral.in/portal/buy-online/assets/healthPlus/images/logo.svg"
+                style="height: 50px; vertical-align: text-top; position: absolute; display: none;">
+            <img src="../Assets/images/sbil-logo.png" style="height: 50px; vertical-align: text-top;">
+        </div>
+
+        <div class="row" style="text-align: center;">
+            <h3 id="txtProposalNumer">Electronic Form Number</h3>
+        </div>
+
+        <div class="row" style="text-align: justify;">
+            <p>Dear Customer,</p>
+            <p id="para_consent1">Placed below is the link to download your membership form along with Benefit
+                Illustration. You are requested to download these documents and
+                validate them by going through the process steps as given below.</p>
+        </div>
+
+        <div class="row">
+            <a id="linkProposalPDF" target="_blank" style="font-size: 20px; color: steelblue;">View Proposal Form and
+                Other Documents</a>
+        </div>
+
+        <div class="row">
+            <h3>Customer Declaration</h3>
+        </div>
+
+        <div class="row" style="text-align: justify; display: inline-flex;">
+            <input id="checktermCondition" type="checkbox">
+            <p id="para_term_codition">consent </p>
+        </div>
+
+        <div class="row">
+            <hr style="margin-top: 10px; margin-bottom: 10px; border-top: 1px solid black;">
+        </div>
+
+        <div class="row" style="text-align: justify; display: inline-flex;">
+            <input id="checkLebelConsent3" type="checkbox" />
+            <p id="lebelConsent3">consent </p>
+        </div>
+
+        <div class="row">
+            <hr style="margin-top: 10px; margin-bottom: 10px; border-top: 1px solid black;">
+        </div>
+
+        <div id="divMainEkyc" style="text-align: justify;">
+            <div class="row">
+                <h3>Mobile number and email validation</h3>
+                <p>Dear Sir/Madam,<br>We request you to see the following details carefully and validate your mobile
+                    number and email id. This is an important process which will ensure you receive all communications
+                    effectively.</p>
+            </div>
+
+            <div id="divNameValidation" class="row"
+                style="width: 100%; border: 1px solid #000; padding: 10px; margin-top: 5px;">
+                <p id="paraNameValidation">Please select your preferred contact method:</p>
+                <div>
+                    <input type="radio" id="paraNameValidationYes" name="NameValidation" value="Yes"
+                        onchange="getMobEmailVadilationVal(this, 'NameValidation')">
+                    <tr>Yes</tr>
+
+                    <input type="radio" id="paraNameValidationNo" name="NameValidation" value="No"
+                        onchange="getMobEmailVadilationVal(this, 'NameValidation')">
+                    <tr>No</tr>
+                </div>
+                <div id="divNamePhoto" class="row" style="text-align: center; display: none;">
+
+                    <video id="videoUser" width="300" height="300" autoplay></video>
+                    <canvas id="canvasUser" width="250" height="250" style="display: none;"></canvas>
+                    <div class="row" style="text-align: center;">
+                        <button type="button" class="btn-info" onclick="onClickCapturePic('name')"
+                            style="text-align: -webkit-center;">Capture</button>
+
+                        <button type="button" class="btn-info" onclick="onClickRetakePic('name')"
+                            style="text-align: -webkit-center;">Retake</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="divMobileValidation" class="row"
+                style="width: 100%; border: 1px solid #000; padding: 10px; margin-top: 5px;">
+                <p id="paraMobileValidation">Please select your preferred contact method:</p>
+                <div>
+                    <input type="radio" id="rbMobileValidationYes" name="MobileValidation" value="Yes"
+                        onchange="getMobEmailVadilationVal(this, 'MobileValidation')">
+                    <tr>Yes</tr>
+
+                    <input type="radio" id="rbMobileValidationNo" name="MobileValidation" value="No"
+                        onchange="getMobEmailVadilationVal(this, 'MobileValidation')">
+                    <tr>No</tr>
+                </div>
+                <div id="divMobilePhoto" class="row" style="text-align: center; display: none;">
+
+                    <video id="videoMobile" width="300" height="300" autoplay></video>
+                    <canvas id="canvasMobile" width="250" height="250" style="display: none;"></canvas>
+                    <div class="row" style="text-align: center;">
+                        <button type="button" class="btn-info" onclick="onClickCapturePic('mobile')"
+                            style="text-align: -webkit-center;">Capture</button>
+
+                        <button type="button" class="btn-info" onclick="onClickRetakePic('mobile')"
+                            style="text-align: -webkit-center;">Retake</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="divEmailValidation" class="row"
+                style="width: 100%; border: 1px solid #000; padding: 10px; margin-top: 5px;">
+                <p id="paraEmailValidation">Please select your preferred contact method:</p>
+                <div>
+                    <input type="radio" id="rbEmailValidationYes" name="EmailValidation" value="Yes"
+                        onchange="getMobEmailVadilationVal(this, 'EmailValidation')">
+                    <tr>Yes</tr>
+
+                    <input type="radio" id="rbEmailValidationNo" name="EmailValidation" value="No"
+                        onchange="getMobEmailVadilationVal(this, 'EmailValidation')">
+                    <tr>No</tr>
+                </div>
+
+                <div id="divEmailPhoto" class="row" style="text-align: center; display: none;">
+
+                    <video id="videoEmail" width="300" height="300" autoplay></video>
+                    <canvas id="canvasEmail" width="250" height="250" style="display: none;"></canvas>
+                    <div class="row" style="text-align: center;">
+                        <button type="button" class="btn-info" onclick="onClickCapturePic('email')"
+                            style="text-align: -webkit-center;">Capture</button>
+
+                        <button type="button" class="btn-info" onclick="onClickRetakePic('email')"
+                            style="text-align: -webkit-center;">Retake</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row" id="divWhatsAppConsent" style="border: thin solid black;">
+            <p class="col-md-6" style="color: blue;">Do You want to receive all communication through Whatsapp?</p>
+            <div class="col-md-6" style="margin-top: 10px; margin-bottom: 10px; text-align: -webkit-center;">
+                <div class="col-md-3" style="display: table-cell; text-align: center;">
+                    <input name="WhatsAppConsent" type="radio" id="rbWhatsAppY" value="Yes"
+                        class="btn btn-warning btn-width" style="text-align: -webkit-center;" checked />
+                    <label for="rbWhatsAppY" style="vertical-align: sub;">Yes</label>
+                </div>
+                <div class="col-md-3" style="display: table-cell; text-align: center;">
+                    <input name="WhatsAppConsent" type="radio" id="rbWhatsAppN" value="No"
+                        class="btn btn-warning btn-width" style="text-align: -webkit-center;" />
+                    <label for="rbWhatsAppN" style="vertical-align: sub;">No</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" id="divSendOTP" style="margin-top: 10px; margin-bottom: 10px; text-align: center;">
+            <button type="button" class="btn btn-warning btn-width" onclick="onClickSendOTP()"
+                style="text-align: -webkit-center;">
+                send OTP
+            </button>
+        </div>
+
+        <div class="row" id="divEnterOTP"
+            style="margin-top: 10px; margin-bottom: 10px; text-align: center; display: none;">
+            <input id="txtProposalOTP" type="text" placeholder="Enter OTP" style="text-align: center;" />
+        </div>
+
+        <div class="row" id="divButtonSubmit"
+            style="margin-top: 10px; margin-bottom: 10px; text-align: center; display: block;">
+            <button type="button" class="btn btn-warning btn-width" onclick="onClickSubmit()"
+                style="text-align: -webkit-center;">
+                Submit
+            </button>
+        </div>
+
+        <!-- to check pdf -->
+        <!-- <div id="divViewPDF" class="container-fluid" style="margin: 10px; display: block;">
+
+            <div class="row">
+                <iframe style="height:83%; width:99%;position:absolute;" id="framePDF"></iframe>
+            </div>
+        </div> -->
+    </div>
+</body>
+
+</html>
