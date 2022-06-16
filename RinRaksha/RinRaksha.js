@@ -1,5 +1,4 @@
 var formNumber = '',
-    PIVC_LINK = '',
     QUOT_NUMBER = '',
     CUST_NAME = '',
     CUST_MOBILE_NUMBER = '',
@@ -9,7 +8,9 @@ var formNumber = '',
     CUST_EMAIL = '',
     strDocType = '',
     IS_ESIGN = '',
-    consent3 = '';
+    consent3 = '',
+    RD_LOAN_TYPE = '',
+    RD_LOAN_ACCOUNT_NO = '';
 
 var currentDate = '';
 var mOnePagerIMG, mUserPhoto, mUserMobilePhoto, mUserEmailPhoto;
@@ -23,7 +24,7 @@ var IMG_ONEPAGER = "img_CUSTDECL_01";
 var PDF_ONEPAGER = "pdf_onepager_01";
 var PDF_MOB_EMAIL_VALIDATION = "pdf_onepager_02";
 var VID_ONEPAGER = "vid_custvideo_01";
-var orgnisation_name = 'SBI Life Insurance Company Limited (SBI Life)',
+var orgnisation_name = 'SBI Life Insurance Company Limited',
     orgnisation_name_a = 'SBI life';
 var recorder; // globally accessible
 var video;
@@ -59,18 +60,12 @@ function ready() {
     let urlParm = new URLSearchParams(window.location.search.replace("&amp;", "&"));
 
     /* var data = urlParm.get('prop').split('|');
-    formNumber = data[0];
-    PIVC_LINK = data[1]; */
-    formNumber = '7011401546';
-    //PIVC_LINK = "https://youtube.com";
+    formNumber = data[0]; */
+    //formNumber = '7011401546';
+    formNumber = '7011401642';
 
     hideURLParams();
 
-    document.getElementById('modalDesc1').innerText = `We request you to please complete pre-issuance verification process by clicking here `;
-    document.getElementById('anchorPIVCLInk').href = PIVC_LINK;
-    document.getElementById('anchorPIVCLInk').innerText = PIVC_LINK;
-    document.getElementById('modalDesc2').innerText = `. Your policy issuance is subject to underwritting and verification process. Call our toll free `;
-    document.getElementById('modalDesc3').innerText = ` for further info. In case of any error while clicking on link, please copy and paste the link directly in the web-browser.`;
     // When the user clicks anywhere outside of the modal, close it
     /* window.onclick = function(event) {
         if (event.target == document.getElementById('myModal')) {
@@ -392,10 +387,20 @@ function getProposalDetails(proposalNum) {
                                 document.getElementById('divWhatsAppConsent').style.display = 'none';
                             }
 
+                            RD_LOAN_TYPE = jsonArr[i].RD_LOAN_TYPE;
+                            if (RD_LOAN_TYPE == undefined) {
+                                RD_LOAN_TYPE = '';
+                            }
+
+                            RD_LOAN_ACCOUNT_NO = jsonArr[i].RD_LOAN_ACCOUNT_NO;
+                            if (RD_LOAN_ACCOUNT_NO == undefined) {
+                                RD_LOAN_ACCOUNT_NO = '';
+                            }
+
                             document.getElementById('para_term_codition').innerHTML = `I/We <font color='cornflowerblue'>${CUST_NAME}</font> confirm that I/We have submitted the above referred electronic
-                                    form to buy <font color='cornflowerblue'>${orgnisation_name_a} ${PLAN_NAME}</font> (name of product) on my/our own accord.<br><br><p>I/We also confirm that <font color='cornflowerblue'>${CUST_NAME}</font> (Name of Employee) bearing code no. 
+                                    form to buy <font color='cornflowerblue'>${orgnisation_name_a} ${PLAN_NAME}</font> for my <font color='cornflowerblue'>${RD_LOAN_TYPE}</font> with loan account No. <font color='cornflowerblue'>${RD_LOAN_ACCOUNT_NO}</font> on my/our own accord.<br><br><p>I/We also confirm that bank staff bearing code no. 
                                     <font color='cornflowerblue'>${SR_CODE}</font> has explained the product features, benefits with documentation/information to me/us in my own language. I/We have also
-                                    read and reviewed the need analysis, custom benefit illustration including health questionnaire and understood/answered the
+                                    read and reviewed the custom including health questionnaire and understood/answered the
                                     same and I/We am/are satisfied with the product features.</p>`
 
 
@@ -540,12 +545,7 @@ async function uploadCallService(byteArray, fileName) {
                                         mOnePagerVID = undefined;
                                         isOnePageImgUploaded = false;
 
-                                        if (PIVC_LINK === undefined || PIVC_LINK === '') {
-                                            //refresh the entire document
-                                            document.location.reload();
-                                        } else {
-                                            document.getElementById('myModal').style.display = 'block';
-                                        }
+                                        document.getElementById('myModal').style.display = 'block';
                                     }
                                 } else if (strDocType == PDF_MOB_EMAIL_VALIDATION) {
                                     //send email to customer and agent if email is present
@@ -561,12 +561,7 @@ async function uploadCallService(byteArray, fileName) {
                                     isMobileValidated = false;
                                     isEmailValidated = false;
 
-                                    if (PIVC_LINK === undefined || PIVC_LINK === '') {
-                                        //refresh the entire document
-                                        document.location.reload();
-                                    } else {
-                                        document.getElementById('myModal').style.display = 'block';
-                                    }
+                                    document.getElementById('myModal').style.display = 'block';
                                 }
 
                             } else {
@@ -751,7 +746,7 @@ function onClickSubmit() {
 
     if (error === '') {
 
-        /* validateAnnexureOTP().then(validateOTPTrue => { */
+        validateAnnexureOTP().then(validateOTPTrue => {
 
             createMobEmailValidationPDF().then(pdfMobEmailTrue => {
 
@@ -775,93 +770,14 @@ function onClickSubmit() {
                 alert('Error while creating mobile and email validation pdf');
             });
 
-        /* }, validateOTPTrue => {
+        }, validateOTPTrue => {
             alert('Invalid OTP')
-        }); */
+        });
 
     } else {
         alert(error);
     }
 
-}
-
-function onClickSendOTP() {
-
-    try {
-
-        var error = validateFields();
-
-        if (error === '') {
-
-
-
-            self.showLoader('loader');
-            var xmlhttp = new XMLHttpRequest();
-            var SERVICE_NAME = 'GenerateOTP_SBIL';
-            xmlhttp.open('POST', serviceURL + '?op=' + SERVICE_NAME, true);
-
-            var sr = `<?xml version="1.0" encoding="utf-8"?>
-        <soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">
-        <soap12:Body>
-        <${SERVICE_NAME} xmlns="http://tempuri.org/">
-        <ADHAR_NO></ADHAR_NO>
-        <QUOT_NO>${QUOT_NUMBER}</QUOT_NO>
-        <KYC_TYPE>OTP</KYC_TYPE> 
-        <MOBILE_NO>${CUST_MOBILE_NUMBER}</MOBILE_NO>
-        <strSource>Connect Life</strSource>
-        <strProductName>${PLAN_NAME}</strProductName>
-        </${SERVICE_NAME}>
-        </soap12:Body>
-        </soap12:Envelope>`;
-            console.log(sr);
-
-            xmlhttp.onreadystatechange = function () {
-
-                self.hideLoader('loader');
-
-                if (xmlhttp.readyState == 4) {
-                    if (xmlhttp.status == 200) {
-
-                        data = unescapeHTML(xmlhttp.responseText);
-                        //console.log(data);
-
-                        if (window.DOMParser) {
-                            parser = new DOMParser();
-                            xmlDoc = parser.parseFromString(data, "text/xml");
-                        } else {
-                            xmlDoc = new ActiveXObject("MIcrosoft.XMLDOM");
-                            xmlDoc.async = false;
-                            xmlDoc.loadXML(text);
-                        }
-
-                        var response = xmlDoc.getElementsByTagName("GenerateOTP_SBILResult")[0].textContent;
-
-                        //console.log("Upload:" + response + " fileName:" + fileName);
-
-                        if (response == "1") {
-                            alert('OTP Send Successfully');
-                            document.getElementById('divEnterOTP').style.display = 'block';
-                            document.getElementById('divButtonSubmit').style.display = 'block';
-                        } else {
-                            alert('Please try again leter!');
-                            document.getElementById('divEnterOTP').style.display = 'none';
-                            document.getElementById('divButtonSubmit').style.display = 'none';
-                        }
-                    }
-                }
-            }
-            //specify request headers
-            xmlhttp.setRequestHeader('Content-Type', 'text/xml');
-            //send the SOAP request
-            xmlhttp.send(sr);
-
-        } else {
-            alert(error)
-        }
-    } catch (error) {
-        console.log(error);
-        alert(error);
-    }
 }
 
 let validateAnnexureOTP = () => {
@@ -873,6 +789,13 @@ let validateAnnexureOTP = () => {
             var SERVICE_NAME = 'ValidateOTP_SBIL';
             xmlhttp.open('POST', serviceURL + '?op=' + SERVICE_NAME, true);
 
+            var strSourceVal = "";
+            if (QUOT_NUMBER.includes("OL70")) {
+                strSourceVal = "Connect Life";
+            } else if (QUOT_NUMBER.includes("RN70")) {
+                strSourceVal = "Parivartan";
+            }
+
             var sr = `<?xml version="1.0" encoding="utf-8"?>
         <soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">
         <soap12:Body>
@@ -881,7 +804,7 @@ let validateAnnexureOTP = () => {
         <QUOT_NO>${QUOT_NUMBER}</QUOT_NO>
         <MOBILE_NO>${CUST_MOBILE_NUMBER}</MOBILE_NO>
         <OTP>${document.getElementById('txtProposalOTP').value}</OTP>
-        <strSource>Connect Life</strSource>
+        <strSource>${strSourceVal}</strSource>
         </${SERVICE_NAME}>
         </soap12:Body>
         </soap12:Envelope>`;
@@ -1094,7 +1017,7 @@ let createAnnexurePDF = () => {
                             style: 'titleFont',
                             alignment: 'justify'
                         }, {
-                            text: `\nI/We ${CUST_NAME} confirm that I/We have submitted the above referred electronic proposal to buy ${PLAN_NAME === 'Arogya Shield'? '' : 'SBI Life'} ${PLAN_NAME} (name of product) on my/our own accord.\n\nI/We also confirm that ${SR_NAME} (Name of Employee) bearing code no. ${SR_CODE} has explained the product features, benefits with documentation/information to me/us in my own language. I/We have also read and reviewed the need analysis, custom benefit illustration including health questionnaire and understood/answered the same and I/We am/are satisfied with the product features.`,
+                            text: `\nI/We ${CUST_NAME} confirm that I/We have submitted the above referred electronic proposal to buy ${PLAN_NAME === 'Arogya Shield'? '' : 'SBI Life'} ${PLAN_NAME} (name of product) on my/our own accord.\n\nI/We also confirm that ${SR_NAME} (Name of Employee) bearing code no. ${SR_CODE} has explained the product features, benefits with documentation/information to me/us in my own language. I/We have also read and reviewed the custom benefit illustration including health questionnaire and understood/answered the same and I/We am/are satisfied with the product features.`,
                             style: 'smallFontSize',
                             alignment: 'justify',
                         }],
@@ -1301,15 +1224,11 @@ function getWhatsAppConsent() {
 
 }
 
-function onClickPIVCLink(doPIVC) {
+function onClickThanks() {
 
     document.getElementById('myModal').style.display = 'none';
-
-    if (doPIVC) {
-        window.open(PIVC_LINK);
-        //refresh the entire document
-        document.location.reload();
-    }
+    //refresh the entire document
+    document.location.reload();
 }
 
 function get2TLogopdfData() {

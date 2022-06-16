@@ -46,22 +46,14 @@
         <div class="modal-content" style="text-align: center">
 
             <!-- <div class="modal-content" > -->
-            <p style="text-align: justify">
-                <span id="modalDesc1"></span>
-                <a id="anchorPIVCLInk" href=""></a>
-                <span id="modalDesc2">Some text in the Modal..</span>
-                <a id="anchorPIVCCall" href="18002679090">18002679090</a>
-                <span id="modalDesc3">Some text in the Modal..</span>
+            <p style="text-align: center">
+                <span id="modalDesc1">Thank you for submition.</span>
             </p>
 
             <!-- </div> -->
 
-            <button type="button" class="btn btn-warning" onclick="onClickPIVCLink(true)">
-                DO PIVC NOW
-            </button>
-
-            <button type="button" class="btn btn-warning" onclick="onClickPIVCLink(false)">
-                DO LATER
+            <button type="button" class="btn btn-warning" onclick="onClickThanks()">
+                OK
             </button>
         </div>
     </div>
@@ -80,14 +72,12 @@
 
         <div class="row" style="text-align: justify;">
             <p>Dear Customer,</p>
-            <p id="para_consent1">Placed below is the link to download your membership form along with Benefit
-                Illustration. You are requested to download these documents and
+            <p id="para_consent1">Placed below is the link to download your membership form along with. You are requested to download these documents and
                 validate them by going through the process steps as given below.</p>
         </div>
 
         <div class="row">
-            <a id="linkProposalPDF" target="_blank" style="font-size: 20px; color: steelblue;">View Proposal Form and
-                Other Documents</a>
+            <a id="linkProposalPDF" target="_blank" style="font-size: 20px; color: steelblue;">View Proposal Form</a>
         </div>
 
         <div class="row">
@@ -201,31 +191,24 @@
             </div>
         </div>
 
-        <div class="row" id="divWhatsAppConsent" style="border: thin solid black;">
-            <p class="col-md-6" style="color: blue;">Do You want to receive all communication through Whatsapp?</p>
-            <div class="col-md-6" style="margin-top: 10px; margin-bottom: 10px; text-align: -webkit-center;">
-                <div class="col-md-3" style="display: table-cell; text-align: center;">
-                    <input name="WhatsAppConsent" type="radio" id="rbWhatsAppY" value="Yes"
-                        class="btn btn-warning btn-width" style="text-align: -webkit-center;" checked />
-                    <label for="rbWhatsAppY" style="vertical-align: sub;">Yes</label>
+        <div class="row" id="divWhatsAppConsent" style="width: 100%; border: 1px solid #000; padding: 10px; margin-top: 5px;">
+            <p style="color: blue;">Do You want to receive all communication through Whatsapp?</p>
+            <div>
+                <div style="display: table-cell; text-align: center;">
+                    <input name="WhatsAppConsent" type="radio" id="rbWhatsAppY" value="Yes" class="btn btn-warning btn-width"
+                    style="text-align: -webkit-center;" checked/>
+                <label for="rbWhatsAppY" style="vertical-align: sub;">Yes</label>
                 </div>
-                <div class="col-md-3" style="display: table-cell; text-align: center;">
-                    <input name="WhatsAppConsent" type="radio" id="rbWhatsAppN" value="No"
-                        class="btn btn-warning btn-width" style="text-align: -webkit-center;" />
-                    <label for="rbWhatsAppN" style="vertical-align: sub;">No</label>
-                </div>
+                <div style="display: table-cell; text-align: center;">
+                    <input name="WhatsAppConsent" type="radio" id="rbWhatsAppN" value="No" class="btn btn-warning btn-width"
+                    style="text-align: -webkit-center;"/>
+                <label for="rbWhatsAppN" style="vertical-align: sub;">No</label>
+                </div>            
             </div>
         </div>
 
-        <div class="row" id="divSendOTP" style="margin-top: 10px; margin-bottom: 10px; text-align: center;">
-            <button type="button" class="btn btn-warning btn-width" onclick="onClickSendOTP()"
-                style="text-align: -webkit-center;">
-                send OTP
-            </button>
-        </div>
-
         <div class="row" id="divEnterOTP"
-            style="margin-top: 10px; margin-bottom: 10px; text-align: center; display: none;">
+            style="margin-top: 10px; margin-bottom: 10px; text-align: center;">
             <input id="txtProposalOTP" type="text" placeholder="Enter OTP" style="text-align: center;" />
         </div>
 
